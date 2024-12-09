@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock-Paper-Scissors</title>
+  </head>
+  <body>
+    <script>
+      function getComputerChoice() {
+        let compchoice = Math.random() * Math.floor(1);
+        if (compchoice < 0.32) {
+          return "rock";
+        } else if ((compchoice > 0.32) & (compchoice < 0.66)) {
+          return "paper";
+        } else {
+          return "scissors";
+        }
+        return;
+      }
+      // getComputerChoice();
+
+      function getHumanChoice() {
+        let human = window.prompt("Choose rock, paper or scissors");
+        return human;
+      }
+      // console.log(getHumanChoice());
+
+      let computerScore = 0;
+      let humanScore = 0;
+
+      function playRound(humanChoice, computerChoice) {
+        humanChoice.toLowerCase();
+        if (humanChoice === "rock" && computerChoice === "paper") {
+          computerScore += 1;
+          console.log("You lose!");
+        } else if (humanChoice === "rock" && computerChoice === "scissors") {
+          humanScore += 1;
+          console.log("You win!");
+        } else if (humanChoice === "paper" && computerChoice === "rock") {
+          humanScore += 1;
+          console.log("You win!");
+        } else if (humanChoice === "paper" && computerChoice === "scissors") {
+          computerScore += 1;
+          console.log("You lose!");
+        } else if (humanChoice === "scissors" && computerChoice === "rock") {
+          computerScore += 1;
+          console.log("You lose!");
+        } else if (humanChoice === "scissors" && computerChoice === "paper") {
+          humanScore += 1;
+          console.log("You win!");
+        } else {
+          console.log("Draw!");
+        }
+      }
+      let computerChoice = getComputerChoice();
+      let humanChoice = getHumanChoice();
+
+      console.log(playRound(humanChoice, computerChoice));
+      console.log(getComputerChoice());
+    </script>
+  </body>
+</html>
