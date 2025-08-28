@@ -6,6 +6,10 @@
     <title>Rock-Paper-Scissors</title>
   </head>
   <body>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <div id="output"></div>
     <script>
       let humanScore = 0;
       let computerScore = 0;
@@ -21,14 +25,15 @@
       }
 
       function getHumanChoice() {
-        let human = window.prompt("Choose rock, paper or scissors");
-        let answer = human.toLowerCase();
-        if (answer === "rock" || answer === "paper" || answer === "scissors") {
-          return answer;
-        } else {
-          alert("That is not a valid input");
-          getHumanChoice();
-        }
+        const rock = document.querySelector("#rock");
+        const paper = document.querySelector("#paper");
+        const scissors = document.querySelector("#scissors");
+        const output = document.querySelector("#output");
+        return new Promise((resolve) => {
+          rock.addEventListener("click", () => resolve("rock"));
+          paper.addEventListener("click", () => resolve("paper"));
+          scissors.addEventListener("click", () => resolve("paper"));
+        });
       }
       function playRound(humanChoice, computerChoice) {
         if (humanChoice === "rock" && computerChoice === "paper") {
@@ -57,24 +62,24 @@
       function gamePlay() {
         let round = 1;
 
-        while (round <= 5) {
-          let humanChoice = getHumanChoice();
-          let computerChoice = getComputerChoice();
-          console.log("Round:", round);
-          playRound(humanChoice, computerChoice);
-          round++;
-          console.log("Your Score: " + humanScore);
-          console.log("Computer Score: " + computerScore);
-        }
-
-        if (humanScore < computerScore) {
-          console.log("Computer Wins!");
-        } else if (humanScore > computerScore) {
-          console.log("You Win!");
-        } else {
-          consloe.log("Its a Draw!!!");
-        }
+        // while (round <= 5) {
+        let humanChoice = getHumanChoice();
+        let computerChoice = getComputerChoice();
+        console.log("Round:", round);
+        playRound(humanChoice, computerChoice);
+        round++;
+        console.log("Your Score: " + humanScore);
+        console.log("Computer Score: " + computerScore);
       }
+
+      if (humanScore < computerScore) {
+        console.log("Computer Wins!");
+      } else if (humanScore > computerScore) {
+        console.log("You Win!");
+      } else {
+        console.log("Its a Draw!!!");
+      }
+      // }
 
       gamePlay();
     </script>
