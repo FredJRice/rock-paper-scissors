@@ -13,6 +13,13 @@
     <script>
       let humanScore = 0;
       let computerScore = 0;
+
+      // Cache DOM elements globally
+      const rock = document.querySelector("#rock");
+      const paper = document.querySelector("#paper");
+      const scissors = document.querySelector("#scissors");
+      const output = document.querySelector("#output");
+
       function getComputerChoice() {
         let compchoice = Math.random() * Math.floor(1);
         if (compchoice < 0.32) {
@@ -22,17 +29,22 @@
         } else {
           return "scissors";
         }
-      }
-
-      function getHumanChoice() {
-        const rock = document.querySelector("#rock");
-        const paper = document.querySelector("#paper");
-        const scissors = document.querySelector("#scissors");
-        const output = document.querySelector("#output");
         return new Promise((resolve) => {
-          rock.addEventListener("click", () => resolve("rock"));
+          function handleClick(choice) {
+            rock.removeEventListener("click", onRock);
+            paper.removeEventListener("click", onPaper);
+            scissors.removeEventListener("click", onScissors);
+            resolve(choice);
+          }
+          function onRock() { handleClick("rock"); }
+          function onPaper() { handleClick("paper"); }
+          function onScissors() { handleClick("scissors"); }
+          rock.addEventListener("click", onRock);
+          paper.addEventListener("click", onPaper);
+          scissors.addEventListener("click", onScissors);
+        });
           paper.addEventListener("click", () => resolve("paper"));
-          scissors.addEventListener("click", () => resolve("paper"));
+          scissors.addEventListener("click", () => resolve("scissors"));
         });
       }
       function playRound(humanChoice, computerChoice) {
@@ -59,11 +71,11 @@
         }
       }
 
-      function gamePlay() {
+      async function gamePlay() {
         let round = 1;
 
         // while (round <= 5) {
-        let humanChoice = getHumanChoice();
+        let humanChoice = await getHumanChoice();
         let computerChoice = getComputerChoice();
         console.log("Round:", round);
         playRound(humanChoice, computerChoice);
