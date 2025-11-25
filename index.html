@@ -9,9 +9,14 @@
     <button id="rock">Rock</button>
     <button id="paper">Paper</button>
     <button id="scissors">Scissors</button>
+    <button id="playAgain">Play Again</button>
     <br></br>
     <div id="output"></div>
     <div id="score"></div>
+    <br></br>
+    <div id="finalMessage"></div>
+
+    
 
     <script>
       let humanScore = 0;
@@ -44,11 +49,46 @@
         `${result}`;
 
         updateScore();
+        checkWinner();
       }
 
       function updateScore() {
         document.querySelector("#score").textContent = `Your Score: ${humanScore} | Computer Score: ${computerScore}`;
       }
+      function checkWinner() {
+        if (humanScore === 5) {
+          endGame("🎉 You win the match!");
+        } else if (computerScore === 5) {
+          endGame("💀 Computer wins the match!");
+        }
+      }
+
+      function endGame(message) {
+        document.querySelector("#finalMessage").textContent = message;
+
+        // disable game buttons
+        document.getElementById("rock").disabled = true;
+        document.getElementById("paper").disabled = true;
+        document.getElementById("scissors").disabled = true;
+
+        // show restart button
+        document.getElementById("playAgain").style.display = "inline-block";
+      }
+
+      document.getElementById("playAgain").addEventListener("click", () => {
+        humanScore = 0;
+        computerScore = 0;
+
+        document.querySelector("#output").textContent = "";
+        document.querySelector("#score").textContent = "";
+        document.querySelector("#finalMessage").textContent = "";
+
+        document.getElementById("rock").disabled = false;
+        document.getElementById("paper").disabled = false;
+        document.getElementById("scissors").disabled = false;
+
+        document.getElementById("playAgain").style.display = "none";
+      });
 
       document.getElementById("rock").addEventListener("click", () => {
         let computerChoice = getComputerChoice();
